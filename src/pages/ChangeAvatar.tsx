@@ -31,11 +31,9 @@ const ChangeAvatar: React.FC = () => {
 
 	const Heading = styled.h2`
 		margin-bottom: 5rem;
-		font-size: 2rem;
+		font-size: 2.8rem;
+		text-align: center;
 
-		@media ${device.laptop} {
-			font-size: 2.4rem;
-		}
 
 		@media ${device.desktop} {
 			font-size: 3.2rem;

@@ -16,6 +16,12 @@ const Container = styled.div`
 const MainFlex = styled.section`
 	display: flex;
 	gap: 5rem;
+
+	flex-direction: column;
+
+	@media ${device.laptop} {
+		flex-direction: row;
+	}
 `;
 
 const Layout: React.FC = () => {
