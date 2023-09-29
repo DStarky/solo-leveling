@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 const PlayerFrame = styled.section`
 	flex-basis: 32rem;
 	flex-shrink: 0;
+	flex-grow: 0;
+	max-width: 32rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -102,7 +104,7 @@ const Player: React.FC = () => {
 						onBlur={submitHandler}>
 						<input
 							type='text'
-							placeholder='Input new username'
+							placeholder='Введите никнейм'
 							value={usernameValue}
 							onChange={inputHandler}
 							ref={inputRef}

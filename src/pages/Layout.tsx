@@ -16,11 +16,12 @@ const Container = styled.div`
 const MainFlex = styled.section`
 	display: flex;
 	gap: 5rem;
-
+	align-items: center;
 	flex-direction: column;
 
 	@media ${device.laptop} {
 		flex-direction: row;
+		align-items: flex-start;
 	}
 `;
 
