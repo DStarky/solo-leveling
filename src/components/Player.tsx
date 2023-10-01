@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Pencil } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUser } from '../store/userSlice';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import ProgressBar from './ProgressBar';
 import { changeName } from '../store/userSlice';
@@ -66,6 +66,7 @@ const Player: React.FC = () => {
 	const { name, level, avatarPath } = useAppSelector(selectUser);
 	const [editName, setEditName] = useState<boolean>(false);
 	const [usernameValue, setUsernameValue] = useState<string>('');
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const dispatch = useAppDispatch();
 
@@ -80,8 +81,17 @@ const Player: React.FC = () => {
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setEditName(false);
-		dispatch(changeName(usernameValue));
+		if (usernameValue === '') {
+			dispatch(changeName('Username'));
+		} else {
+			dispatch(changeName(usernameValue));
+		}
+		
 	};
+
+	useEffect(() => {
+		if (inputRef.current) inputRef.current.focus();
+	}, [editName]);
 
 	return (
 		<PlayerFrame>
@@ -95,10 +105,10 @@ const Player: React.FC = () => {
 							placeholder='Input new username'
 							value={usernameValue}
 							onChange={inputHandler}
-						/>
-						<input
-							type='submit'
-							value='OK'
+							ref={inputRef}
+							style={{
+								padding: '0.5rem 1rem',
+							}}
 						/>
 					</form>
 				) : (
