@@ -34,4 +34,16 @@ h1 {
   font-weight: 900;
   text-align: center;
   text-transform: uppercase;
+  position: relative;
+  
+  &::after{
+    content: '';
+    height: 1px;
+    width: 100%;
+    background-color: #000;
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
