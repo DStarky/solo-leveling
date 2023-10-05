@@ -11,7 +11,7 @@ export type User = {
 const initialState: User = {
   name: 'Username',
   level: 0,
-  currentExperience: 1,
+  currentExperience: 7,
   nextLevelExperience: 10,
 }
 
