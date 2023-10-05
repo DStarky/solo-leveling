@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import styled from 'styled-components';
 import { device } from '../styles/breakpoint';
+import Player from '../components/Player';
 
 const Container = styled.div`
 	margin: 0 auto;
@@ -16,12 +17,11 @@ const MainFlex = styled.section`
 	gap: 2rem;
 `;
 
-
 const Layout: React.FC = () => {
 	return (
 		<Container>
 			<MainFlex>
-
+				<Player />
 				<Outlet />
 			</MainFlex>
 		</Container>
