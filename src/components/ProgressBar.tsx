@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import { variables } from '../styles';
+import { useAppSelector } from '../hooks';
+import { selectUser } from '../store/userSlice';
 
-const Outer = styled.div`
+interface ProgressProps {
+	currentExperience: number;
+	nextLevelExperience: number;
+}
+
+const Progress = styled.div<ProgressProps>`
 	width: 100%;
 	height: 1rem;
 	border-radius: 1rem;
@@ -12,16 +19,20 @@ const Outer = styled.div`
 		content: '';
 		background-color: ${variables.colorBgRed};
 		height: 100%;
-		width: 30%;
+		width: ${props => (props.currentExperience / props.nextLevelExperience) * 100}%;
 		position: absolute;
 		border-radius: inherit;
 	}
-  
 `;
 
 const ProgressBar: React.FC = () => {
-  return (
-    <Outer />
-  )
-}
-export default ProgressBar
+	const { currentExperience, nextLevelExperience } = useAppSelector(selectUser);
+
+	return (
+		<Progress
+			currentExperience={currentExperience}
+			nextLevelExperience={nextLevelExperience}
+		/>
+	);
+};
+export default ProgressBar;

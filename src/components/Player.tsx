@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Avatar from '../assets/images/avatar.png';
 import ProgressBar from './ProgressBar';
 import { useAppSelector } from '../hooks';
+import { selectUser } from '../store/userSlice';
 
 const PlayerFrame = styled.section`
 	flex-basis: 25rem;
@@ -12,7 +13,7 @@ const PlayerFrame = styled.section`
 `;
 
 const Player: React.FC = () => {
-	const { name, level } = useAppSelector(state => state.user);
+	const { name, level } = useAppSelector(selectUser);
 
 	return (
 		<PlayerFrame>

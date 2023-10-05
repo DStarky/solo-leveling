@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from ".";
 
-type User = {
+export type User = {
   name: string;
   level: number;
   currentExperience: number;
@@ -11,7 +11,7 @@ type User = {
 const initialState: User = {
   name: 'Username',
   level: 0,
-  currentExperience: 0,
+  currentExperience: 1,
   nextLevelExperience: 10,
 }
 
