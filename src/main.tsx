@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import store from './redux'
+import store from './store'
 import Routing from './Routing'
 import './styles/main.scss';
 
