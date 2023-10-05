@@ -25,22 +25,41 @@ const UsernameBlock = styled.div`
 const Player: React.FC = () => {
 	const { name, level } = useAppSelector(selectUser);
 	const [editName, setEditName] = useState<boolean>(false);
+	const [usernameValue, setUsernameValue] = useState<string>('');
+
 	const dispatch = useAppDispatch();
 
 	const editHandler = () => {
 		setEditName(true);
 	};
 
+	const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUsernameValue(e.target.value);
+	};
+
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setEditName(false);
-		dispatch(changeName('123'))
+		dispatch(changeName(usernameValue));
 	};
 
 	return (
 		<PlayerFrame>
 			<UsernameBlock>
-				{!editName ? (
+				{editName ? (
+					<form onSubmit={submitHandler} onBlur={submitHandler}>
+						<input
+							type='text'
+							placeholder='Input new username'
+							value={usernameValue}
+							onChange={inputHandler}
+						/>
+						<input
+							type='submit'
+							value='OK'
+						/>
+					</form>
+				) : (
 					<>
 						<h3>{name}</h3>
 						<Pencil
@@ -49,17 +68,6 @@ const Player: React.FC = () => {
 							onClick={editHandler}
 						/>
 					</>
-				) : (
-					<form onSubmit={submitHandler}>
-						<input
-							type='text'
-							placeholder='Input new username'
-						/>
-						<input
-							type='submit'
-							value='OK'
-						/>
-					</form>
 				)}
 			</UsernameBlock>
 			<img

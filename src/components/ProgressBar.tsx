@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { variables } from '../styles';
+import { variables } from '../styles/theme';
 import { useAppSelector } from '../hooks';
 import { selectUser } from '../store/userSlice';
 
@@ -14,6 +14,7 @@ const Progress = styled.div<ProgressProps>`
 	border-radius: 1rem;
 	background-color: ${variables.colorBgGray};
 	position: relative;
+	margin-bottom: 1rem;
 
 	&::after {
 		content: '';
