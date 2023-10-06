@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUser } from '../store/userSlice';
 import { useState } from 'react';
 
-import AvatarImg from '/images/avatar-3.png';
 import ProgressBar from './ProgressBar';
 import { changeName } from '../store/userSlice';
 import { Link } from 'react-router-dom';
 
 const PlayerFrame = styled.section`
-	flex-basis: 25rem;
+	flex-basis: 32rem;
+	flex-shrink: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -60,8 +60,10 @@ const AvatarCover = styled.div`
 	}
 `;
 
+// START COMPONENT
+
 const Player: React.FC = () => {
-	const { name, level } = useAppSelector(selectUser);
+	const { name, level, avatarPath } = useAppSelector(selectUser);
 	const [editName, setEditName] = useState<boolean>(false);
 	const [usernameValue, setUsernameValue] = useState<string>('');
 
@@ -113,7 +115,7 @@ const Player: React.FC = () => {
 			<Link to='/avatar'>
 				<AvatarCover>
 					<img
-						src={AvatarImg}
+						src={`/images/${avatarPath}`}
 						alt='avatar of user'
 					/>
 				</AvatarCover>

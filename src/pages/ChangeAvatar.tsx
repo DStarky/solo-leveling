@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useAppDispatch } from '../hooks';
+import { changeAvatar } from '../store/userSlice';
 
 const ChangeAvatar: React.FC = () => {
 	const [images, setImages] = useState<string[]>([]);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		const numberOfImages = 8;
@@ -30,7 +33,9 @@ const ChangeAvatar: React.FC = () => {
 			<ContainerGrid>
 				{images.map((imageName, index) => {
 					return (
-						<ImageCover key={index}>
+						<ImageCover
+							key={index}
+							onClick={() => dispatch(changeAvatar(imageName))}>
 							<img
 								src={`/images/${imageName}`}
 								alt='user avatar'

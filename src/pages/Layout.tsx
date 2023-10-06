@@ -2,6 +2,7 @@ import { Outlet } from 'react-router';
 import styled from 'styled-components';
 import { device } from '../styles/breakpoint';
 import Player from '../components/Player';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
 	margin: 3rem auto;
@@ -20,6 +21,7 @@ const MainFlex = styled.section`
 const Layout: React.FC = () => {
 	return (
 		<Container>
+			<Link to='/'><h1>Поднятие уровня в одиночку</h1></Link>
 			<MainFlex>
 				<Player />
 				<Outlet />
