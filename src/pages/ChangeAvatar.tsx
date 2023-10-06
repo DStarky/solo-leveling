@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch } from '../hooks';
 import { changeAvatar } from '../store/userSlice';
+import { device } from '../styles/breakpoint';
 
 const ChangeAvatar: React.FC = () => {
 	const [images, setImages] = useState<string[]>([]);
@@ -16,8 +17,29 @@ const ChangeAvatar: React.FC = () => {
 	const ContainerGrid = styled.div`
 		display: grid;
 		max-width: 100%;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		gap: 2rem;
+
+		@media ${device.laptop} {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@media ${device.desktop} {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	`;
+
+	const Heading = styled.h2`
+		margin-bottom: 5rem;
+		font-size: 2rem;
+
+		@media ${device.laptop} {
+			font-size: 2.4rem;
+		}
+
+		@media ${device.desktop} {
+			font-size: 3.2rem;
+		}
 	`;
 
 	const ImageCover = styled.div`
@@ -29,7 +51,7 @@ const ChangeAvatar: React.FC = () => {
 
 	return (
 		<div>
-			<h2 style={{ marginBottom: '5rem', fontSize: '3.2rem' }}>Выбери новый аватар</h2>
+			<Heading >Выберите новый аватар</Heading>
 			<ContainerGrid>
 				{images.map((imageName, index) => {
 					return (
