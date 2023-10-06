@@ -4,7 +4,7 @@ import { device } from '../styles/breakpoint';
 import Player from '../components/Player';
 
 const Container = styled.div`
-	margin: 0 auto;
+	margin: 3rem auto;
 	padding: 0 3rem;
 	max-width: 100%;
 	@media ${device.desktop} {
