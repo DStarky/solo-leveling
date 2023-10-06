@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUser } from '../store/userSlice';
 import { useState } from 'react';
 
-import AvatarImg from '../assets/images/avatar-3.png';
-import ChangeImg from '../assets/icons/image.svg';
+import AvatarImg from '/images/avatar-3.png';
 import ProgressBar from './ProgressBar';
 import { changeName } from '../store/userSlice';
 import { Link } from 'react-router-dom';

@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const MainFlex = styled.section`
 	display: flex;
-	gap: 2rem;
+	gap: 5rem;
 `;
 
 const Layout: React.FC = () => {
