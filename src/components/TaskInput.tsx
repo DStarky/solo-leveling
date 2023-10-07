@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Popover } from 'react-tiny-popover';
 
 import { device } from '../styles/breakpoint';
-import { Flame, Gem } from 'lucide-react';
+import { Flame, Gem, Sword, Swords, Skull } from 'lucide-react';
 import { variables } from '../styles/theme';
 import MyPopover from './MyPopover';
+import { Todo } from '../types';
 
 const AddForm = styled.form`
 	margin: 2rem 0;
@@ -64,6 +65,11 @@ const AddButton = styled.button`
 const TaskInput: React.FC = () => {
 	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
 	const [isAwardOpen, setIsAwardOpen] = useState<boolean>(false);
+	const [currentTask, setCurrentTask] = useState<Todo>({
+		difficult: 'ease',
+		award: 0,
+		text: '',
+	});
 
 	// Закрытие Popover при клике снаружи
 	const popoverRef = useRef<HTMLDivElement>(null);
@@ -85,7 +91,7 @@ const TaskInput: React.FC = () => {
 		};
 	}, []);
 
-	const PopoverHandle = (popover: 'difficult' | 'award'): void => {
+	const PopoverHandler = (popover: 'difficult' | 'award'): void => {
 		if (popover === 'difficult') {
 			setIsAwardOpen(false);
 			setIsDifficultOpen(true);
@@ -95,12 +101,30 @@ const TaskInput: React.FC = () => {
 		}
 	};
 
+	const textHandler = (e: React.FormEvent<HTMLInputElement>) => {
+		const inputElement = e.target as HTMLInputElement; // Явно указываем тип
+
+		setCurrentTask(prev => ({
+			...prev,
+			text: inputElement.value,
+		}));
+	};
+
+	const chooseDifficultHandler = (difficult: Todo['difficult']) => {
+		setCurrentTask(prev => ({
+			...prev,
+			difficult: difficult,
+		}));
+	};
+
 	return (
 		<AddForm>
 			<InputWrapper>
 				<AddInput
 					type='text'
 					placeholder='Добавить задачу'
+					value={currentTask.text}
+					onChange={textHandler}
 				/>
 				<InputIcons>
 					<Popover
@@ -110,11 +134,13 @@ const TaskInput: React.FC = () => {
 						padding={20}
 						content={
 							<MyPopover>
-								<p>How Are You?</p>
+								<Sword onClick={() => chooseDifficultHandler('ease')} />
+								<Swords onClick={() => chooseDifficultHandler('medium')} />
+								<Skull onClick={() => chooseDifficultHandler('hard')} />
 							</MyPopover>
 						}>
 						<Flame
-							onClick={() => PopoverHandle('difficult')}
+							onClick={() => PopoverHandler('difficult')}
 							strokeWidth={1}
 							color={isDifficultOpen ? variables.colorBgRed : '#000'}
 						/>
@@ -130,7 +156,7 @@ const TaskInput: React.FC = () => {
 							</MyPopover>
 						}>
 						<Gem
-							onClick={() => PopoverHandle('award')}
+							onClick={() => PopoverHandler('award')}
 							strokeWidth={1}
 							color={isAwardOpen ? variables.colorBgRed : '#000'}
 						/>

@@ -4,8 +4,8 @@ import { useAppSelector } from '../hooks';
 import { selectUser } from '../store/userSlice';
 
 interface ProgressProps {
-	currentExperience: number;
-	nextLevelExperience: number;
+	currentexperience: number;
+	nextlevelexperience: number;
 }
 
 const Progress = styled.div<ProgressProps>`
@@ -20,7 +20,7 @@ const Progress = styled.div<ProgressProps>`
 		content: '';
 		background-color: ${variables.colorBgRed};
 		height: 100%;
-		width: ${props => (props.currentExperience / props.nextLevelExperience) * 100}%;
+		width: ${props => (props.currentexperience / props.nextlevelexperience) * 100}%;
 		position: absolute;
     left: 0;
 		border-radius: inherit;
@@ -28,16 +28,16 @@ const Progress = styled.div<ProgressProps>`
 `;
 
 const ProgressBar: React.FC = () => {
-	const { currentExperience, nextLevelExperience } = useAppSelector(selectUser);
+	const { currentExperience: currentexperience, nextLevelExperience: nextlevelexperience } = useAppSelector(selectUser);
 
 	return (
 		<div style={{ width: '100%', textAlign: 'center' }}>
 			<Progress
-				currentExperience={currentExperience}
-				nextLevelExperience={nextLevelExperience}
-				title={`${currentExperience} / ${nextLevelExperience}`}
+				currentexperience={currentexperience}
+				nextlevelexperience={nextlevelexperience}
+				title={`${currentexperience} / ${nextlevelexperience}`}
 			/>
-			<p style={{ fontSize: '1.2rem' }}>{`${currentExperience} / ${nextLevelExperience}`}</p>
+			<p style={{ fontSize: '1.2rem' }}>{`${currentexperience} / ${nextlevelexperience}`}</p>
 		</div>
 	);
 };

@@ -49,7 +49,7 @@ const ChangeAvatar: React.FC = () => {
 
 	return (
 		<div>
-			<Heading >Выберите новый аватар</Heading>
+			<Heading>Выберите новый аватар</Heading>
 			<ContainerGrid>
 				{images.map((imageName, index) => {
 					return (
