@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Popover } from 'react-tiny-popover';
 
 import { device } from '../styles/breakpoint';
-import { Flame, Gem, Sword, Swords, Skull } from 'lucide-react';
+import { Gem, Sword, Swords, Skull } from 'lucide-react';
 import { variables } from '../styles/theme';
 import MyPopover from './MyPopover';
 import { Todo } from '../types';
+import AwardCounter from './AwardCounter';
 
 const AddForm = styled.form`
 	margin: 2rem 0;
@@ -72,12 +73,12 @@ const TaskInput: React.FC = () => {
 	});
 
 	// Закрытие Popover при клике снаружи
-	const popoverRef = useRef<HTMLDivElement>(null);
+	const outsideClickRef = useRef<HTMLDivElement | null>(null); // Для отслеживания кликов вне компонента MyPopover
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
-			if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
-				// Клик сделан вне Popover, закрываем Popover
+			if (outsideClickRef.current && !outsideClickRef.current.contains(event.target as Node)) {
+				// Клик сделан вне компонента MyPopover
 				setIsAwardOpen(false);
 				setIsDifficultOpen(false);
 			}
@@ -102,7 +103,7 @@ const TaskInput: React.FC = () => {
 	};
 
 	const textHandler = (e: React.FormEvent<HTMLInputElement>) => {
-		const inputElement = e.target as HTMLInputElement; // Явно указываем тип
+		const inputElement = e.target as HTMLInputElement;
 
 		setCurrentTask(prev => ({
 			...prev,
@@ -128,38 +129,73 @@ const TaskInput: React.FC = () => {
 				/>
 				<InputIcons>
 					<Popover
-						ref={popoverRef}
 						isOpen={isDifficultOpen}
 						positions={['bottom']}
 						padding={20}
 						content={
-							<MyPopover>
-								<Sword onClick={() => chooseDifficultHandler('ease')} />
-								<Swords onClick={() => chooseDifficultHandler('medium')} />
-								<Skull onClick={() => chooseDifficultHandler('hard')} />
-							</MyPopover>
+							<div
+								ref={node => {
+									outsideClickRef.current = node; // Сохраняем ссылку на div для отслеживания кликов вне MyPopover
+								}}>
+								<MyPopover>
+									<Sword onClick={() => chooseDifficultHandler('ease')} />
+									<Swords onClick={() => chooseDifficultHandler('medium')} />
+									<Skull onClick={() => chooseDifficultHandler('hard')} />
+								</MyPopover>
+							</div>
 						}>
-						<Flame
-							onClick={() => PopoverHandler('difficult')}
-							strokeWidth={1}
-							color={isDifficultOpen ? variables.colorBgRed : '#000'}
-						/>
+						{currentTask.difficult === 'ease' ? (
+							<Sword
+								onClick={() => PopoverHandler('difficult')}
+								strokeWidth={1}
+								color={isDifficultOpen ? variables.colorBgRed : '#000'}
+							/>
+						) : currentTask.difficult === 'medium' ? (
+							<Swords
+								onClick={() => PopoverHandler('difficult')}
+								strokeWidth={1}
+								color={isDifficultOpen ? variables.colorBgRed : '#000'}
+							/>
+						) : (
+							<Skull
+								onClick={() => PopoverHandler('difficult')}
+								strokeWidth={1}
+								color={isDifficultOpen ? variables.colorBgRed : '#000'}
+							/>
+						)}
 					</Popover>
 					<Popover
-						ref={popoverRef}
 						isOpen={isAwardOpen}
 						positions={['bottom']}
 						padding={20}
 						content={
-							<MyPopover>
-								<p>How Are You?</p>
-							</MyPopover>
+							<div
+								ref={node => {
+									outsideClickRef.current = node; // Сохраняем ссылку на div для отслеживания кликов вне MyPopover
+								}}>
+								<MyPopover>
+									<AwardCounter
+										currentTask={currentTask}
+										setCurrentTask={setCurrentTask}
+									/>
+								</MyPopover>
+							</div>
 						}>
-						<Gem
-							onClick={() => PopoverHandler('award')}
-							strokeWidth={1}
-							color={isAwardOpen ? variables.colorBgRed : '#000'}
-						/>
+						{currentTask.award > 0 ? (
+							<div>
+								<span
+									style={{ fontSize: '2.2rem', fontWeight: '400', cursor: 'pointer', color: isAwardOpen ? variables.colorBgRed : '#000' }}
+									onClick={() => PopoverHandler('award')}>
+									{currentTask.award}
+								</span>
+							</div>
+						) : (
+							<Gem
+								onClick={() => PopoverHandler('award')}
+								strokeWidth={1}
+								color={isAwardOpen ? variables.colorBgRed : '#000'}
+							/>
+						)}
 					</Popover>
 				</InputIcons>
 			</InputWrapper>
