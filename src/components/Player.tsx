@@ -88,7 +88,6 @@ const Player: React.FC = () => {
 		} else {
 			dispatch(changeName(usernameValue));
 		}
-		
 	};
 
 	useEffect(() => {
@@ -115,12 +114,13 @@ const Player: React.FC = () => {
 					</form>
 				) : (
 					<>
-						<h3 style={{fontSize : '2.4rem'}}>{name}</h3>
+						<h3 style={{ fontSize: '2.4rem' }}>{name}</h3>
 						<Pencil
 							size={16}
 							style={{ cursor: 'pointer' }}
-							onClick={editHandler}
-						/>
+							onClick={editHandler}>
+							<title>Изменить имя пользователя</title>
+						</Pencil>
 					</>
 				)}
 			</UsernameBlock>
