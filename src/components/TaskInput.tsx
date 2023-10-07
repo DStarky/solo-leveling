@@ -1,8 +1,8 @@
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Popover } from 'react-tiny-popover';
 
 import { device } from '../styles/breakpoint';
-import { useState } from 'react';
 import { Flame, Gem } from 'lucide-react';
 import { variables } from '../styles/theme';
 import MyPopover from './MyPopover';
@@ -61,9 +61,29 @@ const AddButton = styled.button`
 	cursor: pointer;
 `;
 
-const TaskInput = () => {
+const TaskInput: React.FC = () => {
 	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
 	const [isAwardOpen, setIsAwardOpen] = useState<boolean>(false);
+
+	// Закрытие Popover при клике снаружи
+	const popoverRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		function handleClickOutside(event: MouseEvent) {
+			if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
+				// Клик сделан вне Popover, закрываем Popover
+				setIsAwardOpen(false);
+				setIsDifficultOpen(false);
+			}
+		}
+
+		// Добавляем обработчик события для клика на всем экране
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			// Удаляем обработчик события при размонтировании компонента
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	const PopoverHandle = (popover: 'difficult' | 'award'): void => {
 		if (popover === 'difficult') {
@@ -84,6 +104,7 @@ const TaskInput = () => {
 				/>
 				<InputIcons>
 					<Popover
+						ref={popoverRef}
 						isOpen={isDifficultOpen}
 						positions={['bottom']}
 						padding={20}
@@ -99,6 +120,7 @@ const TaskInput = () => {
 						/>
 					</Popover>
 					<Popover
+						ref={popoverRef}
 						isOpen={isAwardOpen}
 						positions={['bottom']}
 						padding={20}
