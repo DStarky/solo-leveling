@@ -4,6 +4,8 @@ import { Popover } from 'react-tiny-popover';
 import { device } from '../styles/breakpoint';
 import { useState } from 'react';
 import { Flame, Gem } from 'lucide-react';
+import { variables } from '../styles/theme';
+import MyPopover from './MyPopover';
 
 const AddForm = styled.form`
 	margin: 2rem 0;
@@ -22,12 +24,16 @@ const InputWrapper = styled.div`
 `;
 
 const InputIcons = styled.div`
-  position: absolute;
-  right: 2rem;
-  top: calc(50% - 12px);
-  display: flex;
-  gap: 1rem;
-`
+	position: absolute;
+	right: 1.5rem;
+	top: calc(50% - 12px);
+	display: flex;
+	gap: 1rem;
+
+	svg {
+		cursor: pointer;
+	}
+`;
 
 const AddInput = styled.input`
 	padding: 1.2rem 2.4rem;
@@ -38,7 +44,7 @@ const AddInput = styled.input`
 
 	&:focus {
 		outline: none;
-		border: 1px solid #d66572;
+		border: 1px solid ${variables.colorBgRed};
 
 		&::placeholder {
 			color: transparent;
@@ -50,13 +56,24 @@ const AddButton = styled.button`
 	padding: 1.2rem 2.4rem;
 	border-radius: 0.6rem;
 	border: 1px solid transparent;
-	background-color: #d66572;
+	background-color: ${variables.colorBgRed};
 	color: #fff;
 	cursor: pointer;
 `;
 
 const TaskInput = () => {
-	const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
+	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
+	const [isAwardOpen, setIsAwardOpen] = useState<boolean>(false);
+
+	const PopoverHandle = (popover: 'difficult' | 'award'): void => {
+		if (popover === 'difficult') {
+			setIsAwardOpen(false);
+			setIsDifficultOpen(true);
+		} else {
+			setIsAwardOpen(true);
+			setIsDifficultOpen(false);
+		}
+	};
 
 	return (
 		<AddForm>
@@ -66,17 +83,39 @@ const TaskInput = () => {
 					placeholder='Добавить задачу'
 				/>
 				<InputIcons>
-					<Flame strokeWidth={1} />
-					<Gem strokeWidth={1} />
+					<Popover
+						isOpen={isDifficultOpen}
+						positions={['bottom']}
+						padding={20}
+						content={
+							<MyPopover>
+								<p>How Are You?</p>
+							</MyPopover>
+						}>
+						<Flame
+							onClick={() => PopoverHandle('difficult')}
+							strokeWidth={1}
+							color={isDifficultOpen ? variables.colorBgRed : '#000'}
+						/>
+					</Popover>
+					<Popover
+						isOpen={isAwardOpen}
+						positions={['bottom']}
+						padding={20}
+						content={
+							<MyPopover>
+								<p>How Are You?</p>
+							</MyPopover>
+						}>
+						<Gem
+							onClick={() => PopoverHandle('award')}
+							strokeWidth={1}
+							color={isAwardOpen ? variables.colorBgRed : '#000'}
+						/>
+					</Popover>
 				</InputIcons>
 			</InputWrapper>
 			<AddButton>Добавить</AddButton>
-			{/* <Popover
-				isOpen={isPopoverOpen}
-				positions={['bottom']} // preferred positions by priority
-				content={<div>Hi! I'm popover content.</div>}>
-				<div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>Click me!</div>
-			</Popover> */}
 		</AddForm>
 	);
 };
