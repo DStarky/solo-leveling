@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Popover } from 'react-tiny-popover';
 
 import { device } from '../styles/breakpoint';
-import { Gem, Sword, Swords, Skull } from 'lucide-react';
+import { Sword, Swords, Skull, Coins } from 'lucide-react';
 import { variables } from '../styles/theme';
 import MyPopover from './MyPopover';
 import { Todo } from '../types';
@@ -72,6 +72,14 @@ const AddButton = styled.button`
 	&:active {
 		transform: translateY(0);
 	}
+`;
+
+const CoinsCount = styled.span`
+	font-size: 2.2rem;
+	font-weight: 400;
+	cursor: pointer;
+	display: flex;
+	gap: 0.5rem;
 `;
 
 const TaskInput: React.FC = () => {
@@ -192,21 +200,12 @@ const TaskInput: React.FC = () => {
 								</MyPopover>
 							</div>
 						}>
-						{currentTask.award > 0 ? (
-							<div>
-								<span
-									style={{ fontSize: '2.2rem', fontWeight: '400', cursor: 'pointer', color: isAwardOpen ? variables.colorBgRed : '#000' }}
-									onClick={() => PopoverHandler('award')}>
-									{currentTask.award}
-								</span>
-							</div>
-						) : (
-							<Gem
-								onClick={() => PopoverHandler('award')}
-								strokeWidth={1}
-								color={isAwardOpen ? variables.colorBgRed : '#000'}
-							/>
-						)}
+						<CoinsCount
+							onClick={() => PopoverHandler('award')}
+							style={{ color: isAwardOpen ? variables.colorBgRed : '#000' }}>
+							{currentTask.award}
+							<Coins strokeWidth={1} />
+						</CoinsCount>
 					</Popover>
 				</InputIcons>
 			</InputWrapper>
