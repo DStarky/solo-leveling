@@ -27,7 +27,7 @@ import { variables } from '../../styles/theme';
 
 interface IDifficultIconProps {
 	icon: Todo['difficult'];
-	isDifficultOpen: boolean;
+	isDifficultOpen?: boolean;
 }
 
 const DifficultIcon: React.FC<IDifficultIconProps> = ({ icon, isDifficultOpen }) => {

@@ -74,8 +74,10 @@ const TaskInput: React.FC = () => {
 
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(addTodo({ ...currentTask, id: nanoid() }));
-		setCurrentTask(DEFAULT_TASK);
+		if (currentTask.text) {
+			dispatch(addTodo({ ...currentTask, id: nanoid() }));
+			setCurrentTask(DEFAULT_TASK);
+		}
 	};
 
 	return (
@@ -88,6 +90,31 @@ const TaskInput: React.FC = () => {
 					onChange={textHandler}
 				/>
 				<InputIcons>
+					<Popover
+						isOpen={isCoinsOpen}
+						positions={['bottom']}
+						padding={20}
+						content={
+							<div
+								ref={node => {
+									outsideClickRef.current = node; // Сохраняем ссылку на div для отслеживания кликов вне MyPopover
+								}}>
+								<MyPopover>
+									<p>Награда:</p>
+									<CoinsCounter
+										currentTask={currentTask}
+										setCurrentTask={setCurrentTask}
+									/>
+								</MyPopover>
+							</div>
+						}>
+						<CoinsCount
+							onClick={() => PopoverHandler('coins')}
+							style={{ color: isCoinsOpen ? variables.colorBgRed : '#000' }}>
+							{currentTask.coins}
+							<Coins strokeWidth={1} />
+						</CoinsCount>
+					</Popover>
 					<Popover
 						isOpen={isDifficultOpen}
 						positions={['bottom']}
@@ -113,31 +140,6 @@ const TaskInput: React.FC = () => {
 								isDifficultOpen={isDifficultOpen}
 							/>
 						</div>
-					</Popover>
-					<Popover
-						isOpen={isCoinsOpen}
-						positions={['bottom']}
-						padding={20}
-						content={
-							<div
-								ref={node => {
-									outsideClickRef.current = node; // Сохраняем ссылку на div для отслеживания кликов вне MyPopover
-								}}>
-								<MyPopover>
-									<p>Награда:</p>
-									<CoinsCounter
-										currentTask={currentTask}
-										setCurrentTask={setCurrentTask}
-									/>
-								</MyPopover>
-							</div>
-						}>
-						<CoinsCount
-							onClick={() => PopoverHandler('coins')}
-							style={{ color: isCoinsOpen ? variables.colorBgRed : '#000' }}>
-							{currentTask.coins}
-							<Coins strokeWidth={1} />
-						</CoinsCount>
 					</Popover>
 				</InputIcons>
 			</InputWrapper>

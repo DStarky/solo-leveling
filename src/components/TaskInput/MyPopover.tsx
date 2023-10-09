@@ -7,6 +7,7 @@ interface IMyPopoverProps {
 
 const PopoverWrapper = styled.div`
 	background-color: ${variables.colorBgRed};
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	padding: 1rem;
 	position: relative;
 	color: #fff;
