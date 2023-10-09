@@ -7,14 +7,16 @@ export type User = {
 	currentExperience: number;
 	nextLevelExperience: number;
 	avatarPath: string;
+	coins: number;
 };
 
 const initialState: User = {
 	name: 'Username',
 	level: 0,
-	currentExperience: 7,
+	currentExperience: 0,
 	nextLevelExperience: 10,
 	avatarPath: 'avatar-1.png',
+	coins: 0,
 };
 
 const userSlice = createSlice({

@@ -7,7 +7,7 @@ import MyPopover from './MyPopover.tsx';
 import { Todo } from '../../types';
 import CoinsCounter from '../CoinsCounter';
 
-import { AddButton, AddForm, AddInput, CoinsCount, InputIcons, InputWrapper } from './styledComponents.tsx';
+import { AddButton, AddForm, AddInput, CoinsCount, InputIcons, InputWrapper } from './StyledComponents.tsx';
 import DifficultIcon from './DifficultIcon.tsx';
 
 const TaskInput: React.FC = () => {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Pencil } from 'lucide-react';
+import { Coins, Pencil, Sparkle } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUser } from '../store/userSlice';
 import { useEffect, useRef, useState } from 'react';
@@ -62,10 +62,17 @@ const AvatarCover = styled.div`
 	}
 `;
 
+const PlayerInfo = styled.div`
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 1rem;
+	align-items: center;
+`;
+
 // START COMPONENT
 
 const Player: React.FC = () => {
-	const { name, level, avatarPath } = useAppSelector(selectUser);
+	const { name, level, avatarPath, coins } = useAppSelector(selectUser);
 	const [editName, setEditName] = useState<boolean>(false);
 	const [usernameValue, setUsernameValue] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -133,7 +140,14 @@ const Player: React.FC = () => {
 				</AvatarCover>
 			</Link>
 			<ProgressBar />
-			<p>lvl {level}</p>
+			<PlayerInfo>
+				<Sparkle strokeWidth={1} />
+				<p>Level:</p>
+				<p style={{ fontWeight: '700' }}>{level}</p>
+				<Coins strokeWidth={1} />
+				<p>Coins:</p>
+				<p style={{ fontWeight: '700' }}>{coins}</p>
+			</PlayerInfo>
 		</PlayerFrame>
 	);
 };
