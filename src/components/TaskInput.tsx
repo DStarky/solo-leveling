@@ -61,6 +61,17 @@ const AddButton = styled.button`
 	background-color: ${variables.colorBgRed};
 	color: #fff;
 	cursor: pointer;
+	transition: transform 0.2s ease;
+
+	@media (any-hover: hover) {
+		&:hover {
+			transform: translateY(-0.4rem);
+		}
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
 `;
 
 const TaskInput: React.FC = () => {
