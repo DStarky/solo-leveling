@@ -11,33 +11,37 @@ const MyButton = styled.button`
 	cursor: pointer;
 `;
 
-interface AwardCounterProps {
+interface CoinsCounterProps {
 	currentTask: Todo;
 	setCurrentTask: React.Dispatch<React.SetStateAction<Todo>>;
 }
 
-const AwardCounter: React.FC<AwardCounterProps> = ({ currentTask, setCurrentTask }) => {
-	const incrementAward = () => {
+const CoinsCounter: React.FC<CoinsCounterProps> = ({ currentTask, setCurrentTask }) => {
+	const incrementCoins = () => {
 		setCurrentTask(prevTask => ({
 			...prevTask,
-			award: prevTask.award + 1,
+			coins: prevTask.coins + 1,
 		}));
 	};
 
-	const decrementAward = () => {
+	const decrementCoins = () => {
 		setCurrentTask(prevTask => ({
 			...prevTask,
-			award: prevTask.award - 1,
+			coins: prevTask.coins - 1,
 		}));
 	};
 
 	return (
 		<div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-			<MyButton onClick={decrementAward}>-</MyButton>
-			<span style={{ fontSize: '2rem' }}>{currentTask.award}</span>
-			<MyButton onClick={incrementAward}>+</MyButton>
+			<MyButton
+				onClick={decrementCoins}
+				disabled={currentTask.coins <= 0 ? true : false}>
+				-
+			</MyButton>
+			<span style={{ fontSize: '2rem' }}>{currentTask.coins}</span>
+			<MyButton onClick={incrementCoins}>+</MyButton>
 		</div>
 	);
 };
 
-export default AwardCounter;
+export default CoinsCounter;

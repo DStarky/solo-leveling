@@ -11,8 +11,7 @@ const PopoverWrapper = styled.div`
 	position: relative;
 	color: #fff;
 	border-radius: 0.6rem;
-	display: flex;
-	gap: 1rem;
+
 
 	&::after {
 		content: '';

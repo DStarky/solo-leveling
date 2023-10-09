@@ -5,6 +5,6 @@ export interface Strings {
 export type Todo = {
 	id?: number;
 	difficult: 'ease' | 'medium' | 'hard';
-	award: number;
+	coins: number;
 	text: string;
 };

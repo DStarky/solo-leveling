@@ -7,7 +7,7 @@ import { Sword, Swords, Skull, Coins } from 'lucide-react';
 import { variables } from '../styles/theme';
 import MyPopover from './MyPopover';
 import { Todo } from '../types';
-import AwardCounter from './AwardCounter';
+import CoinsCounter from './CoinsCounter';
 
 const AddForm = styled.form`
 	margin: 2rem 0;
@@ -84,10 +84,10 @@ const CoinsCount = styled.span`
 
 const TaskInput: React.FC = () => {
 	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
-	const [isAwardOpen, setIsAwardOpen] = useState<boolean>(false);
+	const [isCoinsOpen, setIsCoinsOpen] = useState<boolean>(false);
 	const [currentTask, setCurrentTask] = useState<Todo>({
 		difficult: 'ease',
-		award: 0,
+		coins: 0,
 		text: '',
 	});
 
@@ -98,7 +98,7 @@ const TaskInput: React.FC = () => {
 		function handleClickOutside(event: MouseEvent) {
 			if (outsideClickRef.current && !outsideClickRef.current.contains(event.target as Node)) {
 				// Клик сделан вне компонента MyPopover
-				setIsAwardOpen(false);
+				setIsCoinsOpen(false);
 				setIsDifficultOpen(false);
 			}
 		}
@@ -111,12 +111,12 @@ const TaskInput: React.FC = () => {
 		};
 	}, []);
 
-	const PopoverHandler = (popover: 'difficult' | 'award'): void => {
+	const PopoverHandler = (popover: 'difficult' | 'coins'): void => {
 		if (popover === 'difficult') {
-			setIsAwardOpen(false);
+			setIsCoinsOpen(false);
 			setIsDifficultOpen(true);
 		} else {
-			setIsAwardOpen(true);
+			setIsCoinsOpen(true);
 			setIsDifficultOpen(false);
 		}
 	};
@@ -157,9 +157,12 @@ const TaskInput: React.FC = () => {
 									outsideClickRef.current = node; // Сохраняем ссылку на div для отслеживания кликов вне MyPopover
 								}}>
 								<MyPopover>
-									<Sword onClick={() => chooseDifficultHandler('ease')} />
-									<Swords onClick={() => chooseDifficultHandler('medium')} />
-									<Skull onClick={() => chooseDifficultHandler('hard')} />
+									<p style={{ marginBottom: '1rem' }}>Уровень сложности:</p>
+									<div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+										<Sword onClick={() => chooseDifficultHandler('ease')} />
+										<Swords onClick={() => chooseDifficultHandler('medium')} />
+										<Skull onClick={() => chooseDifficultHandler('hard')} />
+									</div>
 								</MyPopover>
 							</div>
 						}>
@@ -184,7 +187,7 @@ const TaskInput: React.FC = () => {
 						)}
 					</Popover>
 					<Popover
-						isOpen={isAwardOpen}
+						isOpen={isCoinsOpen}
 						positions={['bottom']}
 						padding={20}
 						content={
@@ -193,7 +196,8 @@ const TaskInput: React.FC = () => {
 									outsideClickRef.current = node; // Сохраняем ссылку на div для отслеживания кликов вне MyPopover
 								}}>
 								<MyPopover>
-									<AwardCounter
+									<p>Награда:</p>
+									<CoinsCounter
 										currentTask={currentTask}
 										setCurrentTask={setCurrentTask}
 									/>
@@ -201,9 +205,9 @@ const TaskInput: React.FC = () => {
 							</div>
 						}>
 						<CoinsCount
-							onClick={() => PopoverHandler('award')}
-							style={{ color: isAwardOpen ? variables.colorBgRed : '#000' }}>
-							{currentTask.award}
+							onClick={() => PopoverHandler('coins')}
+							style={{ color: isCoinsOpen ? variables.colorBgRed : '#000' }}>
+							{currentTask.coins}
 							<Coins strokeWidth={1} />
 						</CoinsCount>
 					</Popover>
