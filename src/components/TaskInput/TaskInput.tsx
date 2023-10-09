@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 import { Popover } from 'react-tiny-popover';
-
+import { nanoid } from 'nanoid';
 import { Sword, Swords, Skull, Coins } from 'lucide-react';
+
 import { variables } from '../../styles/theme';
 import MyPopover from './MyPopover.tsx';
 import { Todo } from '../../types';
@@ -17,6 +18,7 @@ const TaskInput: React.FC = () => {
 		difficult: 'ease',
 		coins: 0,
 		text: '',
+		completed: false,
 	};
 
 	const dispatch = useAppDispatch();
@@ -72,10 +74,9 @@ const TaskInput: React.FC = () => {
 
 	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(addTodo(currentTask));
+		dispatch(addTodo({ ...currentTask, id: nanoid() }));
 		setCurrentTask(DEFAULT_TASK);
 	};
-
 
 	return (
 		<AddForm onSubmit={submitHandler}>

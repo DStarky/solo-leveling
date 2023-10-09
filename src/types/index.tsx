@@ -3,9 +3,9 @@ export interface Strings {
 }
 
 export type Todo = {
-	id?: number;
+	id?: string;
 	difficult: 'ease' | 'medium' | 'hard';
 	coins: number;
 	text: string;
+	completed: boolean;
 };
-
