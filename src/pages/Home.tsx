@@ -1,4 +1,4 @@
-import TaskInput from '../components/TaskInput';
+import TaskInput from '../components/TaskInput/TaskInput';
 
 const Home: React.FC = () => {
 	return (

@@ -1,86 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import { Popover } from 'react-tiny-popover';
 
-import { device } from '../styles/breakpoint';
 import { Sword, Swords, Skull, Coins } from 'lucide-react';
-import { variables } from '../styles/theme';
-import MyPopover from './MyPopover';
-import { Todo } from '../types';
-import CoinsCounter from './CoinsCounter';
+import { variables } from '../../styles/theme';
+import MyPopover from './MyPopover.tsx';
+import { Todo } from '../../types';
+import CoinsCounter from '../CoinsCounter';
 
-const AddForm = styled.form`
-	margin: 2rem 0;
-	display: flex;
-	gap: 1rem;
-	flex-direction: column;
-
-	@media ${device.tablet} {
-		flex-direction: row;
-	}
-`;
-
-const InputWrapper = styled.div`
-	flex-grow: 1;
-	position: relative;
-`;
-
-const InputIcons = styled.div`
-	position: absolute;
-	right: 1.5rem;
-	top: calc(50% - 12px);
-	display: flex;
-	gap: 1rem;
-
-	svg {
-		cursor: pointer;
-	}
-`;
-
-const AddInput = styled.input`
-	padding: 1.2rem 2.4rem;
-	transition: width 0.3s ease;
-	border: 1px solid #000;
-	border-radius: 0.6rem;
-	width: 100%;
-
-	&:focus {
-		outline: none;
-		border: 1px solid ${variables.colorBgRed};
-
-		&::placeholder {
-			color: transparent;
-		}
-	}
-`;
-
-const AddButton = styled.button`
-	padding: 1.2rem 2.4rem;
-	border-radius: 0.6rem;
-	border: 1px solid transparent;
-	background-color: ${variables.colorBgRed};
-	color: #fff;
-	cursor: pointer;
-	transition: transform 0.2s ease;
-
-	@media (any-hover: hover) {
-		&:hover {
-			transform: translateY(-0.4rem);
-		}
-	}
-
-	&:active {
-		transform: translateY(0);
-	}
-`;
-
-const CoinsCount = styled.span`
-	font-size: 2.2rem;
-	font-weight: 400;
-	cursor: pointer;
-	display: flex;
-	gap: 0.5rem;
-`;
+import { AddButton, AddForm, AddInput, CoinsCount, InputIcons, InputWrapper } from './styledComponents.tsx';
+import DifficultIcon from './DifficultIcon.tsx';
 
 const TaskInput: React.FC = () => {
 	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
@@ -166,25 +94,12 @@ const TaskInput: React.FC = () => {
 								</MyPopover>
 							</div>
 						}>
-						{currentTask.difficult === 'ease' ? (
-							<Sword
-								onClick={() => PopoverHandler('difficult')}
-								strokeWidth={1}
-								color={isDifficultOpen ? variables.colorBgRed : '#000'}
+						<div onClick={() => PopoverHandler('difficult')}>
+							<DifficultIcon
+								icon={currentTask.difficult}
+								isDifficultOpen={isDifficultOpen}
 							/>
-						) : currentTask.difficult === 'medium' ? (
-							<Swords
-								onClick={() => PopoverHandler('difficult')}
-								strokeWidth={1}
-								color={isDifficultOpen ? variables.colorBgRed : '#000'}
-							/>
-						) : (
-							<Skull
-								onClick={() => PopoverHandler('difficult')}
-								strokeWidth={1}
-								color={isDifficultOpen ? variables.colorBgRed : '#000'}
-							/>
-						)}
+						</div>
 					</Popover>
 					<Popover
 						isOpen={isCoinsOpen}

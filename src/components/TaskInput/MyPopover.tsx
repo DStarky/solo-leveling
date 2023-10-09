@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { variables } from '../styles/theme';
+import { variables } from '../../styles/theme';
 
 interface IMyPopoverProps {
 	children?: React.ReactNode;
@@ -11,7 +11,6 @@ const PopoverWrapper = styled.div`
 	position: relative;
 	color: #fff;
 	border-radius: 0.6rem;
-
 
 	&::after {
 		content: '';
