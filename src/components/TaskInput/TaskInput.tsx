@@ -9,15 +9,20 @@ import CoinsCounter from '../CoinsCounter';
 
 import { AddButton, AddForm, AddInput, CoinsCount, InputIcons, InputWrapper } from './StyledComponents.tsx';
 import DifficultIcon from './DifficultIcon.tsx';
+import { useAppDispatch } from '../../hooks/index.ts';
+import { addTodo } from '../../store/todoSlice.ts';
 
 const TaskInput: React.FC = () => {
-	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
-	const [isCoinsOpen, setIsCoinsOpen] = useState<boolean>(false);
-	const [currentTask, setCurrentTask] = useState<Todo>({
+	const DEFAULT_TASK: Todo = {
 		difficult: 'ease',
 		coins: 0,
 		text: '',
-	});
+	};
+
+	const dispatch = useAppDispatch();
+	const [isDifficultOpen, setIsDifficultOpen] = useState<boolean>(false);
+	const [isCoinsOpen, setIsCoinsOpen] = useState<boolean>(false);
+	const [currentTask, setCurrentTask] = useState<Todo>(DEFAULT_TASK);
 
 	// Закрытие Popover при клике снаружи
 	const outsideClickRef = useRef<HTMLDivElement | null>(null); // Для отслеживания кликов вне компонента MyPopover
@@ -65,8 +70,15 @@ const TaskInput: React.FC = () => {
 		}));
 	};
 
+	const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		dispatch(addTodo(currentTask));
+		setCurrentTask(DEFAULT_TASK);
+	};
+
+
 	return (
-		<AddForm>
+		<AddForm onSubmit={submitHandler}>
 			<InputWrapper>
 				<AddInput
 					type='text'
