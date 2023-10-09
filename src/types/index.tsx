@@ -8,3 +8,4 @@ export type Todo = {
 	coins: number;
 	text: string;
 };
+
