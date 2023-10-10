@@ -7,6 +7,7 @@ import { CoinsCount } from './TaskInput/StyledComponents';
 import { Coins } from 'lucide-react';
 import { useAppDispatch } from '../hooks';
 import { completeTodo } from '../store/todoSlice';
+ 
 
 const TodoItemLi = styled.li<{ completed: boolean }>`
 	border: 1px solid ${variables.colorBgGray};
@@ -20,16 +21,7 @@ const TodoItemLi = styled.li<{ completed: boolean }>`
 	${props =>
 		props.completed &&
 		css`
-			&::after {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0, 0, 0, 0.1);
-				z-index: -1;
-			}
+			color: ${variables.colorBgGray};
 		`}
 
 	@media (any-hover: hover) {
@@ -64,7 +56,10 @@ const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => 
 				<p>{coins}</p>
 				<Coins strokeWidth={1} />
 			</CoinsCount>
-			<DifficultIcon icon={difficult} />
+			<DifficultIcon
+				icon={difficult}
+				completed={completed}
+			/>
 		</TodoItemLi>
 	);
 };
