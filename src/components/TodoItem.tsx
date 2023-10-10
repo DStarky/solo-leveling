@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Todo } from '../types';
 
 import { variables } from '../styles/theme';
@@ -8,7 +8,7 @@ import { Coins } from 'lucide-react';
 import { useAppDispatch } from '../hooks';
 import { completeTodo } from '../store/todoSlice';
 
-const TodoItemLi = styled.li`
+const TodoItemLi = styled.li<{ completed: boolean }>`
 	border: 1px solid ${variables.colorBgGray};
 	border-radius: 0.6rem;
 	padding: 1rem 1.5rem;
@@ -16,6 +16,21 @@ const TodoItemLi = styled.li`
 	display: flex;
 	align-items: center;
 	gap: 1rem;
+	position: relative;
+	${props =>
+		props.completed &&
+		css`
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.1);
+				z-index: -1;
+			}
+		`}
 
 	@media (any-hover: hover) {
 		&:hover {
@@ -36,7 +51,7 @@ const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => 
 	};
 
 	return (
-		<TodoItemLi>
+		<TodoItemLi completed={completed}>
 			<input
 				type='checkbox'
 				name=''
