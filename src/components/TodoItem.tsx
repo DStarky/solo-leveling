@@ -18,6 +18,7 @@ const TodoItemLi = styled.li<{ completed: boolean }>`
 	align-items: center;
 	gap: 1rem;
 	position: relative;
+	margin-bottom: 1rem;
 
 	${props =>
 		props.completed &&
@@ -34,17 +35,16 @@ const TodoItemLi = styled.li<{ completed: boolean }>`
 			border: 1px solid #000;
 		}
 	}
-
-	&:not(:last-child) {
-		margin-bottom: 1rem;
-	}
 `;
 
 const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => {
 	const dispatch = useAppDispatch();
 
 	const checkboxHandler = () => {
-		if (id) dispatch(completeTodo(id));
+		if (id) {
+			dispatch(completeTodo(id));
+			console.log('click')
+		}
 	};
 
 	return (

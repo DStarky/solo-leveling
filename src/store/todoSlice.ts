@@ -19,23 +19,38 @@ const todoSlice = createSlice({
 		addTodo(state, action: PayloadAction<Todo>) {
 			state.todos = [...state.todos, action.payload];
 		},
-
 		completeTodo(state, action: PayloadAction<string>) {
 			const todoId = action.payload;
-			const todoToComplete = state.todos.find(todo => todo.id === todoId);
 
-			if (todoToComplete) {
-				todoToComplete.completed = !todoToComplete.completed;
+			// Ищем задачу в обоих списках
+			const todoInTodos = state.todos.find(todo => todo.id === todoId);
+			const todoInCompleteTodos = state.completeTodos.find(todo => todo.id === todoId);
+
+			if (todoInTodos) {
+				todoInTodos.completed = !todoInTodos.completed;
 
 				// Проверяем, completed === true или false
-				if (todoToComplete.completed) {
-					// Перемещаем задачу в completeTodos
-					state.completeTodos.push(todoToComplete);
+				if (todoInTodos.completed) {
+					// Перемещаем задачу в начало completeTodos
+					state.completeTodos.unshift(todoInTodos);
 					state.todos = state.todos.filter(todo => todo.id !== todoId);
 				} else {
-					// Перемещаем задачу обратно в todos
-					state.todos.push(todoToComplete);
+					// Перемещаем задачу обратно в начало todos
+					state.todos.unshift(todoInTodos);
 					state.completeTodos = state.completeTodos.filter(todo => todo.id !== todoId);
+				}
+			} else if (todoInCompleteTodos) {
+				todoInCompleteTodos.completed = !todoInCompleteTodos.completed;
+
+				// Проверяем, completed === true или false
+				if (!todoInCompleteTodos.completed) {
+					// Перемещаем задачу обратно в начало todos
+					state.todos.unshift(todoInCompleteTodos);
+					state.completeTodos = state.completeTodos.filter(todo => todo.id !== todoId);
+				} else {
+					// Перемещаем задачу в начало completeTodos
+					state.completeTodos.unshift(todoInCompleteTodos);
+					state.todos = state.todos.filter(todo => todo.id !== todoId);
 				}
 			}
 		},
