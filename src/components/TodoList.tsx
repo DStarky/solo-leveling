@@ -16,29 +16,38 @@ const TodoList: React.FC<ITodoListProps> = ({ type }) => {
 	const { todos, completeTodos } = useAppSelector(selectTodo);
 
 	type ILists = {
-		[K in ITodoListProps['type']]?: Todo[];
+		[K in ITodoListProps['type']]?: [Todo[], string];
 	};
 
 	const LISTS: ILists = {
-		uncompleted: todos,
-		completed: completeTodos,
+		uncompleted: [todos, 'Незавершенные задачи'],
+		completed: [completeTodos, 'Завершенные задачи'],
 		// OTHER WRITE LATER
 	};
 
-	const list = LISTS[type];
+	const listAndTitle = LISTS[type];
 
-	return (
-		<TodoListUl>
-			{list &&
-				list.map(item => {
-					return (
-						<TodoItem
-							key={item.id}
-							{...item}
-						/>
-					);
-				})}
-		</TodoListUl>
-	);
+	let list: Todo[] = [];
+	let title: string = 'Заголовок';
+
+	if (listAndTitle) {
+		[list, title] = listAndTitle;
+	}
+
+return (
+	<TodoListUl>
+		{list.length > 0 && (
+			<>
+				<h3 style={{ margin: '2rem 0rem' }}>{title}</h3>
+				{list.map(item => (
+					<TodoItem
+						key={item.id}
+						{...item}
+					/>
+				))}
+			</>
+		)}
+	</TodoListUl>
+);
 };
 export default TodoList;
