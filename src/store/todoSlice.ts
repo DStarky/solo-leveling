@@ -20,7 +20,7 @@ const todoSlice = createSlice({
 
 		completeTodo(state, action: PayloadAction<string>) {
 			const checkedTodo = state.todos.find(el => el.id === action.payload);
-			if (checkedTodo) checkedTodo.completed = true;
+			if (checkedTodo) checkedTodo.completed = !checkedTodo.completed;
 		},
 	},
 });

@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import { variables } from '../styles/theme';
 import { Todo } from '../types';
+
+import { variables } from '../styles/theme';
 import DifficultIcon from './TaskInput/DifficultIcon';
 import { CoinsCount } from './TaskInput/StyledComponents';
 import { Coins } from 'lucide-react';
+import { useAppDispatch } from '../hooks';
+import { completeTodo } from '../store/todoSlice';
 
 const TodoItemLi = styled.li`
 	border: 1px solid ${variables.colorBgGray};
 	border-radius: 0.6rem;
-	padding: 1rem 1.5rem; 
+	padding: 1rem 1.5rem;
 	transition: border 0.2s ease;
 	display: flex;
 	align-items: center;
@@ -26,11 +29,11 @@ const TodoItemLi = styled.li`
 `;
 
 const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => {
+	const dispatch = useAppDispatch();
 
-	const checkboxHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.preventDefault();
-		
-	}
+	const checkboxHandler = () => {
+		if (id) dispatch(completeTodo(id));
+	};
 
 	return (
 		<TodoItemLi>
