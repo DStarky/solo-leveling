@@ -17,9 +17,14 @@ const todoSlice = createSlice({
 		addTodo(state, action: PayloadAction<Todo>) {
 			state.todos = [...state.todos, action.payload];
 		},
+
+		completeTodo(state, action: PayloadAction<string>) {
+			const checkedTodo = state.todos.find(el => el.id === action.payload);
+			if (checkedTodo) checkedTodo.completed = true;
+		},
 	},
 });
 
 export const selectTodo = (state: RootState) => state.todo;
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, completeTodo } = todoSlice.actions;
 export default todoSlice.reducer;

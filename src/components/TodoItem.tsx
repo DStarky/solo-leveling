@@ -25,7 +25,13 @@ const TodoItemLi = styled.li`
 	}
 `;
 
-const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text }) => {
+const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => {
+
+	const checkboxHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault();
+		
+	}
+
 	return (
 		<TodoItemLi>
 			<input
@@ -33,6 +39,7 @@ const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text }) => {
 				name=''
 				id=''
 				checked={completed}
+				onChange={checkboxHandler}
 			/>
 			<p style={{ flexGrow: '1' }}>{text}</p>
 			<CoinsCount>

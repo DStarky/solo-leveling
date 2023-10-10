@@ -70,7 +70,6 @@ export const AddButton = styled.button`
 export const CoinsCount = styled.span`
 	font-size: 2.2rem;
 	font-weight: 400;
-	cursor: pointer;
 	display: flex;
 	gap: 0.5rem;
 `;

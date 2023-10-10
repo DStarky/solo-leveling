@@ -110,7 +110,7 @@ const TaskInput: React.FC = () => {
 						}>
 						<CoinsCount
 							onClick={() => PopoverHandler('coins')}
-							style={{ color: isCoinsOpen ? variables.colorBgRed : '#000' }}>
+							style={{ color: isCoinsOpen ? variables.colorBgRed : '#000', cursor: 'pointer' }}>
 							{currentTask.coins}
 							<Coins strokeWidth={1} />
 						</CoinsCount>
