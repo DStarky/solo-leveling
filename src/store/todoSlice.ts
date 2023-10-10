@@ -19,8 +19,8 @@ const todoSlice = createSlice({
 		addTodo(state, action: PayloadAction<Todo>) {
 			state.todos = [...state.todos, action.payload];
 		},
-		toggleTodo(state, action: PayloadAction<string>) {
-			const todoId = action.payload;
+		toggleTodo(state, action: PayloadAction<Todo>) {
+			const { id: todoId } = action.payload;
 
 			// Ищем задачу в обоих списках
 			const todoInTodos = state.todos.find(todo => todo.id === todoId);
@@ -32,6 +32,7 @@ const todoSlice = createSlice({
 				// Проверяем, completed === true или false
 				if (todoInTodos.completed) {
 					// Перемещаем задачу в начало completeTodos
+
 					state.completeTodos.unshift(todoInTodos);
 					state.todos = state.todos.filter(todo => todo.id !== todoId);
 				} else {
@@ -58,5 +59,5 @@ const todoSlice = createSlice({
 });
 
 export const selectTodo = (state: RootState) => state.todo;
-export const { addTodo, toggleTodo} = todoSlice.actions;
+export const { addTodo, toggleTodo } = todoSlice.actions;
 export default todoSlice.reducer;

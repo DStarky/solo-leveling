@@ -37,13 +37,13 @@ const TodoItemLi = styled.li<{ completed: boolean }>`
 	}
 `;
 
-const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => {
+const TodoItem: React.FC<Todo> = props => {
+	const { coins, completed, difficult, text, id } = props;
 	const dispatch = useAppDispatch();
 
 	const checkboxHandler = () => {
 		if (id) {
-			dispatch(toggleTodo(id));
-			console.log('click');
+			dispatch(toggleTodo(props));
 		}
 	};
 
