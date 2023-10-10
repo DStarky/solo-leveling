@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { variables } from "../../styles/theme";
-import { device } from "../../styles/breakpoint";
+import styled from 'styled-components';
+import { variables } from '../../styles/theme';
+import { device } from '../../styles/breakpoint';
 
 export const AddForm = styled.form`
 	margin: 2rem 0;
@@ -31,7 +31,7 @@ export const InputIcons = styled.div`
 `;
 
 export const AddInput = styled.input`
-	padding: 1.2rem 2.4rem;
+	padding: 1.2rem 10rem 1.2rem 2.4rem;
 	transition: width 0.3s ease;
 	border: 1px solid #000;
 	border-radius: 0.6rem;

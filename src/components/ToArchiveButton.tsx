@@ -12,6 +12,7 @@ const ArchiveButton = styled.button`
 	font-size: 1rem;
 	transition: filter 0.2s ease;
 	text-transform: uppercase;
+	flex-shrink: 0;
 
 	@media (any-hover: hover) {
 		&:hover {

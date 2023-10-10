@@ -1,25 +1,3 @@
-// {
-// 	currentTask.difficult === 'ease' ? (
-// 		<Sword
-// 			onClick={() => PopoverHandler('difficult')}
-// 			strokeWidth={1}
-// 			color={isDifficultOpen ? variables.colorBgRed : '#000'}
-// 		/>
-// 	) : currentTask.difficult === 'medium' ? (
-// 		<Swords
-// 			onClick={() => PopoverHandler('difficult')}
-// 			strokeWidth={1}
-// 			color={isDifficultOpen ? variables.colorBgRed : '#000'}
-// 		/>
-// 	) : (
-// 		<Skull
-// 			onClick={() => PopoverHandler('difficult')}
-// 			strokeWidth={1}
-// 			color={isDifficultOpen ? variables.colorBgRed : '#000'}
-// 		/>
-// 	);
-// }
-
 import { Sword, Swords, Skull } from 'lucide-react';
 
 import { Todo } from '../../types';
@@ -39,6 +17,7 @@ const DifficultIcon: React.FC<IDifficultIconProps> = ({ icon, isDifficultOpen, c
 	};
 
 	const currentColor = `${completed || isDifficultOpen ? COLORS.red : COLORS.black}`;
+	const iconStyle = { flexShrink: 0 };
 
 	return (
 		<>
@@ -46,18 +25,21 @@ const DifficultIcon: React.FC<IDifficultIconProps> = ({ icon, isDifficultOpen, c
 				<Sword
 					strokeWidth={1}
 					color={currentColor}
+					style={iconStyle}
 				/>
 			)}
 			{icon === 'medium' && (
 				<Swords
 					strokeWidth={1}
 					color={currentColor}
+					style={iconStyle}
 				/>
 			)}
 			{icon === 'hard' && (
 				<Skull
 					strokeWidth={1}
 					color={currentColor}
+					style={iconStyle}
 				/>
 			)}
 		</>

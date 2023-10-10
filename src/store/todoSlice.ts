@@ -19,7 +19,7 @@ const todoSlice = createSlice({
 		addTodo(state, action: PayloadAction<Todo>) {
 			state.todos = [...state.todos, action.payload];
 		},
-		completeTodo(state, action: PayloadAction<string>) {
+		toggleTodo(state, action: PayloadAction<string>) {
 			const todoId = action.payload;
 
 			// Ищем задачу в обоих списках
@@ -58,5 +58,5 @@ const todoSlice = createSlice({
 });
 
 export const selectTodo = (state: RootState) => state.todo;
-export const { addTodo, completeTodo } = todoSlice.actions;
+export const { addTodo, toggleTodo} = todoSlice.actions;
 export default todoSlice.reducer;
