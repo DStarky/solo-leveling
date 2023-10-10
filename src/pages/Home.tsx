@@ -14,8 +14,8 @@ const Home: React.FC = () => {
 		<section style={{ width: '100%' }}>
 			<h2>Главная страница</h2>
 			<TaskInput />
-			<TodoList />
-			<TodoList isCompletedList />
+			<TodoList type='uncompleted' />
+			<TodoList type='completed' />
 		</section>
 	);
 };
