@@ -7,6 +7,7 @@ import { CoinsCount } from './TaskInput/StyledComponents';
 import { Coins } from 'lucide-react';
 import { useAppDispatch } from '../hooks';
 import { completeTodo } from '../store/todoSlice';
+import ToArchiveButton from './ToArchiveButton';
 
 const TodoItemLi = styled.li<{ completed: boolean }>`
 	border: 1px solid ${variables.colorBgGray};
@@ -60,6 +61,7 @@ const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => 
 				className='text'>
 				{text}
 			</p>
+			<ToArchiveButton />
 			<CoinsCount>
 				<p>{coins}</p>
 				<Coins strokeWidth={1} />
