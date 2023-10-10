@@ -7,7 +7,6 @@ import { CoinsCount } from './TaskInput/StyledComponents';
 import { Coins } from 'lucide-react';
 import { useAppDispatch } from '../hooks';
 import { completeTodo } from '../store/todoSlice';
- 
 
 const TodoItemLi = styled.li<{ completed: boolean }>`
 	border: 1px solid ${variables.colorBgGray};
@@ -18,10 +17,15 @@ const TodoItemLi = styled.li<{ completed: boolean }>`
 	align-items: center;
 	gap: 1rem;
 	position: relative;
+
 	${props =>
 		props.completed &&
 		css`
-			color: ${variables.colorBgGray};
+			color: ${variables.colorBgRed};
+			background-color: ${variables.colorBgGray};
+			.text {
+				text-decoration: line-through;
+			}
 		`}
 
 	@media (any-hover: hover) {
@@ -51,7 +55,11 @@ const TodoItem: React.FC<Todo> = ({ coins, completed, difficult, text, id }) => 
 				checked={completed}
 				onChange={checkboxHandler}
 			/>
-			<p style={{ flexGrow: '1' }}>{text}</p>
+			<p
+				style={{ flexGrow: '1' }}
+				className='text'>
+				{text}
+			</p>
 			<CoinsCount>
 				<p>{coins}</p>
 				<Coins strokeWidth={1} />

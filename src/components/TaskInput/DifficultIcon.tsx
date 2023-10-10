@@ -38,7 +38,7 @@ const DifficultIcon: React.FC<IDifficultIconProps> = ({ icon, isDifficultOpen, c
 		gray: variables.colorBgGray,
 	};
 
-	const currentColor = `${completed ? COLORS.gray : isDifficultOpen ? COLORS.red : COLORS.black}`;
+	const currentColor = `${completed || isDifficultOpen ? COLORS.red : COLORS.black}`;
 
 	return (
 		<>
