@@ -44,10 +44,20 @@ const Player: React.FC = () => {
 	}, [editName]);
 
 	useEffect(() => {
-		const totalCoins: number = completeTodos.reduce((acc, todo) => acc + todo.coins, 0);
-		const totalExp: number = completeTodos.reduce((acc, todo) => acc + difficultyPoints[todo.difficult], 0);
+		let totalCoins: number = completeTodos.reduce((acc, todo) => acc + todo.coins, 0);
+		let totalExp: number = completeTodos.reduce((acc, todo) => acc + difficultyPoints[todo.difficult], 0);
+
+		  if (archive.length > 0) {
+				for (const archivedTodo of archive) {
+					if (archivedTodo.completed) {
+						totalCoins += archivedTodo.coins;
+						totalExp += difficultyPoints[archivedTodo.difficult];
+					}
+				}
+			}
+
 		dispatch(updateCoinsAndExp({ coins: totalCoins, exp: totalExp }));
-	}, [completeTodos]);
+	}, [completeTodos, archive]);
 
 	return (
 		<PlayerFrame>
