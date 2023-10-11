@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import { Coins, Pencil, Sparkle } from 'lucide-react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectUser, changeName } from '../../store/userSlice';
+import { selectUser, changeName, difficultyPoints, updateCoinsAndExp } from '../../store/userSlice';
 import ProgressBar from '../ProgressBar';
 import { PlayerFrame, UsernameBlock, AvatarCover, PlayerInfo } from './StyledComponentForPlayer';
+import { selectTodo } from '../../store/todoSlice';
 
 // START COMPONENT
 
 const Player: React.FC = () => {
-	const { name, level, avatarPath, coins } = useAppSelector(selectUser);
+	const { name, level, avatarPath, coins, currentExperience } = useAppSelector(selectUser);
+	const { completeTodos } = useAppSelector(selectTodo);
+
 	const [editName, setEditName] = useState<boolean>(false);
 	const [usernameValue, setUsernameValue] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -38,6 +41,12 @@ const Player: React.FC = () => {
 	useEffect(() => {
 		if (inputRef.current) inputRef.current.focus();
 	}, [editName]);
+
+	useEffect(() => {
+		const totalCoins: number = completeTodos.reduce((acc, todo) => acc + todo.coins, 0);
+		const totalExp: number = completeTodos.reduce((acc, todo) => acc + difficultyPoints[todo.difficult], 0);
+		dispatch(updateCoinsAndExp({ coins: totalCoins, exp: totalExp }));
+	}, [completeTodos]);
 
 	return (
 		<PlayerFrame>
