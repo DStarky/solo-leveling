@@ -11,7 +11,7 @@ import { selectTodo } from '../../store/todoSlice';
 // START COMPONENT
 
 const Player: React.FC = () => {
-	const { name, level, avatarPath, coins, currentExperience } = useAppSelector(selectUser);
+	const { name, level, avatarPath, coins } = useAppSelector(selectUser);
 	const { completeTodos } = useAppSelector(selectTodo);
 
 	const [editName, setEditName] = useState<boolean>(false);

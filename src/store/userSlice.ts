@@ -5,8 +5,9 @@ import { Todo } from '../types';
 export type User = {
 	name: string;
 	level: number;
-	currentExperience: number;
-	nextLevelExperience: number;
+	currentExp: number;
+	nextLevelExp: number;
+	accExp: number;
 	avatarPath: string;
 	coins: number;
 	spentCoins: number;
@@ -18,14 +19,36 @@ export const difficultyPoints: Record<Todo['difficult'], number> = {
 	hard: 3,
 };
 
+const levels: Record<number, number> = {
+	0: 10,
+	1: 20,
+	2: 40,
+	3: 80,
+	4: 160,
+	5: 320,
+};
+
+function accExpByLevel(level: number): number {
+	let totalExp = 0;
+
+	for (let i = 0; i < level; i++) {
+		if (levels[i] !== undefined) {
+			totalExp += levels[i];
+		}
+	}
+
+	return totalExp;
+}
+
 const initialState: User = {
 	name: 'Username',
 	level: 0,
-	currentExperience: 0,
-	nextLevelExperience: 10,
+	currentExp: 0,
+	nextLevelExp: levels[0],
 	avatarPath: 'avatar-1.png',
 	coins: 0,
 	spentCoins: 0,
+	accExp: 0,
 };
 
 const userSlice = createSlice({
@@ -38,9 +61,25 @@ const userSlice = createSlice({
 		changeAvatar(state, action: PayloadAction<string>) {
 			state.avatarPath = action.payload;
 		},
+		
 		updateCoinsAndExp(state, action: PayloadAction<{ coins: number; exp: number }>) {
 			state.coins = action.payload.coins - state.spentCoins;
-			state.currentExperience = action.payload.exp;
+			state.accExp = action.payload.exp;
+			state.currentExp = state.accExp - accExpByLevel(state.level);
+
+			if (state.currentExp > state.nextLevelExp) {
+				state.level += 1;
+				state.nextLevelExp = levels[state.level];
+				state.currentExp = state.accExp - accExpByLevel(state.level);
+			}
+
+			if (state.currentExp < 0) {
+				state.level -= 1;
+				state.nextLevelExp = levels[state.level];
+				state.currentExp = state.accExp - accExpByLevel(state.level);
+			}
+
+			console.log('Всего: ' + state.accExp + ' Уровень: ' + state.level);
 		},
 	},
 });

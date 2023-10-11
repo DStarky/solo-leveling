@@ -22,13 +22,13 @@ const Progress = styled.div<ProgressProps>`
 		height: 100%;
 		width: ${props => (props.currentexperience / props.nextlevelexperience) * 100}%;
 		position: absolute;
-    left: 0;
+		left: 0;
 		border-radius: inherit;
 	}
 `;
 
 const ProgressBar: React.FC = () => {
-	const { currentExperience: currentexperience, nextLevelExperience: nextlevelexperience } = useAppSelector(selectUser);
+	const { currentExp: currentexperience, nextLevelExp: nextlevelexperience } = useAppSelector(selectUser);
 
 	return (
 		<div style={{ width: '100%', textAlign: 'center' }}>
