@@ -28,6 +28,7 @@ const TaskInput: React.FC = () => {
 
 	// Закрытие Popover при клике снаружи
 	const outsideClickRef = useRef<HTMLDivElement | null>(null); // Для отслеживания кликов вне компонента MyPopover
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -77,6 +78,7 @@ const TaskInput: React.FC = () => {
 		if (currentTask.text) {
 			dispatch(addTodo({ ...currentTask, id: nanoid() }));
 			setCurrentTask(DEFAULT_TASK);
+			inputRef.current?.focus();
 		}
 	};
 
@@ -88,6 +90,7 @@ const TaskInput: React.FC = () => {
 					placeholder='Добавить задачу'
 					value={currentTask.text}
 					onChange={textHandler}
+					ref={inputRef}
 				/>
 				<InputIcons>
 					<Popover
