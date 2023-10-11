@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { Todo } from '../types';
-import { updateCoinsAndExp } from './userSlice';
 
 type TodoList = {
 	todos: Todo[];
