@@ -7,12 +7,13 @@ import { selectUser, changeName, difficultyPoints, updateCoinsAndExp } from '../
 import ProgressBar from '../ProgressBar';
 import { PlayerFrame, UsernameBlock, AvatarCover, PlayerInfo } from './StyledComponentForPlayer';
 import { selectTodo } from '../../store/todoSlice';
+import { ArchiveButton } from '../ToArchiveButton';
 
 // START COMPONENT
 
 const Player: React.FC = () => {
 	const { name, level, avatarPath, coins } = useAppSelector(selectUser);
-	const { completeTodos } = useAppSelector(selectTodo);
+	const { completeTodos, archive } = useAppSelector(selectTodo);
 
 	const [editName, setEditName] = useState<boolean>(false);
 	const [usernameValue, setUsernameValue] = useState<string>('');
@@ -95,6 +96,7 @@ const Player: React.FC = () => {
 				<p>Coins:</p>
 				<p style={{ fontWeight: '700' }}>{coins}</p>
 			</PlayerInfo>
+				{archive.length > 0 && <Link to="/archive"><ArchiveButton>Архив</ArchiveButton></Link>}
 		</PlayerFrame>
 	);
 };

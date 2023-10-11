@@ -4,7 +4,7 @@ import { Todo } from '../types';
 import { useAppDispatch } from '../hooks';
 import { toArchive } from '../store/todoSlice';
 
-const ArchiveButton = styled.button`
+export const ArchiveButton = styled.button`
 	cursor: pointer;
 	border: none;
 	outline: none;

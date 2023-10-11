@@ -58,6 +58,9 @@ const todoSlice = createSlice({
 					// Удалим задачу из списка completeTodos
 					state.todos = state.todos.filter(todo => todo.id !== id);
 				}
+
+				// Добавляем задачу в архив
+				state.archive.unshift(todoToArchive);
 			}
 		},
 	},
