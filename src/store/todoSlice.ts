@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { Todo } from '../types';
+import { updateCoinsAndExp } from './userSlice';
 
 type TodoList = {
 	todos: Todo[];
@@ -22,36 +23,23 @@ const todoSlice = createSlice({
 		toggleTodo(state, action: PayloadAction<Todo>) {
 			const { id: todoId } = action.payload;
 
-			// Ищем задачу в обоих списках
-			const todoInTodos = state.todos.find(todo => todo.id === todoId);
-			const todoInCompleteTodos = state.completeTodos.find(todo => todo.id === todoId);
+			// Найдем задачу в обоих списках
+			const todoToUpdate = state.todos.find(todo => todo.id === todoId) || state.completeTodos.find(todo => todo.id === todoId);
 
-			if (todoInTodos) {
-				todoInTodos.completed = !todoInTodos.completed;
+			if (todoToUpdate) {
+				// Изменим состояние задачи на противоположное
+				todoToUpdate.completed = !todoToUpdate.completed;
 
-				// Проверяем, completed === true или false
-				if (todoInTodos.completed) {
-					// Перемещаем задачу в начало completeTodos
-
-					state.completeTodos.unshift(todoInTodos);
+				if (todoToUpdate.completed) {
+					// Если задача теперь завершена, переместим её в начало списка completeTodos
+					state.completeTodos.unshift(todoToUpdate);
+					// Удалим задачу из списка todos
 					state.todos = state.todos.filter(todo => todo.id !== todoId);
 				} else {
-					// Перемещаем задачу обратно в начало todos
-					state.todos.unshift(todoInTodos);
+					// Если задача теперь не завершена, переместим её в начало списка todos
+					state.todos.unshift(todoToUpdate);
+					// Удалим задачу из списка completeTodos
 					state.completeTodos = state.completeTodos.filter(todo => todo.id !== todoId);
-				}
-			} else if (todoInCompleteTodos) {
-				todoInCompleteTodos.completed = !todoInCompleteTodos.completed;
-
-				// Проверяем, completed === true или false
-				if (!todoInCompleteTodos.completed) {
-					// Перемещаем задачу обратно в начало todos
-					state.todos.unshift(todoInCompleteTodos);
-					state.completeTodos = state.completeTodos.filter(todo => todo.id !== todoId);
-				} else {
-					// Перемещаем задачу в начало completeTodos
-					state.completeTodos.unshift(todoInCompleteTodos);
-					state.todos = state.todos.filter(todo => todo.id !== todoId);
 				}
 			}
 		},

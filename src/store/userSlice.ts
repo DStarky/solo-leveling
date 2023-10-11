@@ -1,7 +1,5 @@
-import { Todo } from './../types/index';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '.';
-import { toggleTodo } from './todoSlice';
 
 export type User = {
 	name: string;
@@ -37,18 +35,6 @@ const userSlice = createSlice({
 		changeAvatar(state, action: PayloadAction<string>) {
 			state.avatarPath = action.payload;
 		},
-	},
-	extraReducers: builder => {
-		builder.addCase(toggleTodo, (state, action: PayloadAction<Todo>) => {
-			const { completed, coins, difficult } = action.payload;
-			if (completed) {
-				state.coins -= coins;
-				state.currentExperience -= DIFFICULT_COST[difficult];
-			} else {
-				state.coins += coins;
-				state.currentExperience += DIFFICULT_COST[difficult];
-			}
-		});
 	},
 });
 
