@@ -5,7 +5,7 @@ import { variables } from '../styles/theme';
 import DifficultIcon from './TaskInput/DifficultIcon';
 import { CoinsCount } from './TaskInput/StyledComponents';
 import { Coins } from 'lucide-react';
-import { useAppDispatch} from '../hooks';
+import { useAppDispatch } from '../hooks';
 import { toggleTodo } from '../store/todoSlice';
 import ToArchiveButton from './ToArchiveButton';
 
@@ -40,8 +40,6 @@ const TodoItemLi = styled.li<{ completed: boolean }>`
 const TodoItem: React.FC<Todo> = props => {
 	const { coins, completed, difficult, text, id } = props;
 
-
-
 	const dispatch = useAppDispatch();
 
 	const checkboxHandler = () => {
@@ -64,7 +62,7 @@ const TodoItem: React.FC<Todo> = props => {
 				className='text'>
 				{text}
 			</p>
-			<ToArchiveButton />
+			<ToArchiveButton id={id} />
 			<CoinsCount>
 				<p>{coins}</p>
 				<Coins strokeWidth={1} />

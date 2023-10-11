@@ -5,11 +5,13 @@ import { Todo } from '../types';
 type TodoList = {
 	todos: Todo[];
 	completeTodos: Todo[];
+	archive: Todo[];
 };
 
 const initialState: TodoList = {
 	todos: [],
 	completeTodos: [],
+	archive: [],
 };
 
 const todoSlice = createSlice({
@@ -42,9 +44,25 @@ const todoSlice = createSlice({
 				}
 			}
 		},
+		toArchive(state, action: PayloadAction<Todo['id']>) {
+			const id = action.payload;
+			const todoToArchive = state.todos.find(todo => todo.id === id) || state.completeTodos.find(todo => todo.id === id);
+			console.log(todoToArchive || 'nothing');
+			if (todoToArchive) {
+				if (todoToArchive.completed) {
+					// Если задача завершена
+					// Удалим задачу из списка todos
+					state.completeTodos = state.completeTodos.filter(todo => todo.id !== id);
+				} else {
+					// Если задача не завершена
+					// Удалим задачу из списка completeTodos
+					state.todos = state.todos.filter(todo => todo.id !== id);
+				}
+			}
+		},
 	},
 });
 
 export const selectTodo = (state: RootState) => state.todo;
-export const { addTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, toggleTodo, toArchive } = todoSlice.actions;
 export default todoSlice.reducer;

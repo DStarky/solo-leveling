@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useId } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Popover } from 'react-tiny-popover';
 import { nanoid } from 'nanoid';
 import { Sword, Swords, Skull, Coins } from 'lucide-react';

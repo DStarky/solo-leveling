@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { variables } from '../styles/theme';
+import { Todo } from '../types';
+import { useAppDispatch } from '../hooks';
+import { toArchive } from '../store/todoSlice';
 
 const ArchiveButton = styled.button`
 	cursor: pointer;
@@ -21,7 +24,17 @@ const ArchiveButton = styled.button`
 	}
 `;
 
-const ToArchiveButton = () => {
-	return <ArchiveButton>В архив</ArchiveButton>;
+interface IToArchiveButtonProps {
+	id: Todo['id'];
+}
+
+const ToArchiveButton: React.FC<IToArchiveButtonProps> = ({ id }) => {
+	const dispatch = useAppDispatch();
+
+	const clickHandler = () => {
+		dispatch(toArchive(id));
+	};
+
+	return <ArchiveButton onClick={clickHandler}>В архив</ArchiveButton>;
 };
 export default ToArchiveButton;

@@ -61,7 +61,7 @@ const userSlice = createSlice({
 		changeAvatar(state, action: PayloadAction<string>) {
 			state.avatarPath = action.payload;
 		},
-		
+
 		updateCoinsAndExp(state, action: PayloadAction<{ coins: number; exp: number }>) {
 			state.coins = action.payload.coins - state.spentCoins;
 			state.accExp = action.payload.exp;
@@ -78,8 +78,6 @@ const userSlice = createSlice({
 				state.nextLevelExp = levels[state.level];
 				state.currentExp = state.accExp - accExpByLevel(state.level);
 			}
-
-			console.log('Всего: ' + state.accExp + ' Уровень: ' + state.level);
 		},
 	},
 });
